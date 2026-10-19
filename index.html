@@ -1,0 +1,187 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GitHub Basics Presentation</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <style>
+    .slide-shadow {
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.5);
+    }
+  </style>
+</head>
+<body class="bg-slate-900 text-white min-h-screen flex flex-col items-center justify-between font-sans p-4">
+
+  <!-- Header -->
+  <header class="w-full max-w-5xl flex justify-between items-center py-3 border-b border-slate-800 mb-4">
+    <div class="flex items-center space-x-3">
+      <i class="fab fa-github text-3xl text-purple-400"></i>
+      <h1 class="text-xl font-bold tracking-wide">GitHub Basics for Beginners</h1>
+    </div>
+    <div class="text-sm text-slate-400 bg-slate-800 px-3 py-1 rounded-full border border-slate-700">
+      Slide <span id="current-slide-num" class="text-purple-400 font-bold">1</span> / <span id="total-slides-num">9</span>
+    </div>
+  </header>
+
+  <!-- Main Presentation Container -->
+  <main class="w-full max-w-5xl flex flex-col items-center flex-grow justify-center">
+    
+    <!-- Slide Screen Viewport -->
+    <div class="relative w-full aspect-video bg-black rounded-xl overflow-hidden slide-shadow border border-slate-800 flex items-center justify-center">
+      <!-- Placeholder Image / User Slide -->
+      <img id="slide-img" src="" alt="Slide Image" class="w-full h-full object-contain">
+      
+      <!-- Overlay controls for hover -->
+      <div class="absolute inset-0 flex items-center justify-between p-4 opacity-0 hover:opacity-100 transition-opacity bg-black/20">
+        <button onclick="prevSlide()" class="p-3 bg-slate-900/80 hover:bg-purple-600 rounded-full text-white transition transform hover:scale-110 shadow-lg border border-slate-700">
+          <i class="fas fa-chevron-left text-xl"></i>
+        </button>
+        <button onclick="nextSlide()" class="p-3 bg-slate-900/80 hover:bg-purple-600 rounded-full text-white transition transform hover:scale-110 shadow-lg border border-slate-700">
+          <i class="fas fa-chevron-right text-xl"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Script / Caption Display Box -->
+    <div class="w-full bg-slate-800/80 backdrop-blur border border-slate-700 rounded-xl p-4 mt-4 shadow-inner min-h-[100px] flex items-center">
+      <p id="slide-caption" class="text-slate-200 text-base md:text-lg leading-relaxed italic text-center w-full">
+        <!-- Caption content will update automatically -->
+      </p>
+    </div>
+
+  </main>
+
+  <!-- Footer Player Controls -->
+  <footer class="w-full max-w-5xl mt-4 bg-slate-800 border border-slate-700 rounded-xl p-4 flex flex-col md:flex-row items-center justify-between gap-4">
+    
+    <!-- Play/Pause & Auto-Sync Toggle -->
+    <div class="flex items-center space-x-4">
+      <button id="play-btn" onclick="toggleAudio()" class="w-12 h-12 bg-purple-600 hover:bg-purple-500 rounded-full flex items-center justify-center text-white text-xl shadow-lg transition">
+        <i class="fas fa-play" id="play-icon"></i>
+      </button>
+      <div>
+        <h2 class="text-sm font-semibold">Presentation Audio</h2>
+        <p id="audio-status" class="text-xs text-slate-400">Click play to start presentation</p>
+      </div>
+    </div>
+
+    <!-- Navigation Buttons -->
+    <div class="flex items-center space-x-3">
+      <button onclick="prevSlide()" class="px-4 py-2 bg-slate-700 hover:bg-slate-600 rounded-lg text-sm font-medium transition flex items-center space-x-2">
+        <i class="fas fa-arrow-left"></i> <span>Previous</span>
+      </button>
+      <button onclick="nextSlide()" class="px-4 py-2 bg-purple-600 hover:bg-purple-500 rounded-lg text-sm font-medium transition flex items-center space-x-2">
+        <span>Next</span> <i class="fas fa-arrow-right"></i>
+      </button>
+    </div>
+
+  </footer>
+
+  <!-- Audio Element -->
+  <audio id="audio-player" src="audio.mp3"></audio>
+
+  <script>
+    // Slide Data Array
+    const slides = [
+      {
+        image: "1000065007.jpg",
+        caption: "Hey everyone! Welcome. Aaj hum baat karne wale hain GitHub Basics for Beginners ke baare mein. Kya aapne kabhi socha hai ke developers aapas mein mil kar code kaise manage karte hain? Well, aaj hum version control aur teamwork ki wahi secret key unlock karenge. Chaliye shuru karte hain!"
+      },
+      {
+        image: "1000065008.jpg",
+        caption: "Sabse pehle... GitHub akhir hai kya? Simply put, yeh ek web-based platform hai jo Git tool ko use karke version control aur collaboration allow karta hai. Yahan aap apna code cloud par securely host kar sakte hain, har chote se bade change ko track kar sakte hain, aur duniya ke kisi bhi kone se apni team ke saath mil kar kaam kar sakte hain! Ek tarah se... yeh developers ka Google Drive samajh lein!"
+      },
+      {
+        image: "1000065009.jpg",
+        caption: "Ab aate hain iske 3 main pillars par. Pehla... Repository: Yeh aapke project ka main folder hota hai jahan sara code save rehta hai. Doosra... Commit: Yeh aapke project ka ek snapshot hota hai... jaise game mein progress save karna! Aur teesra... Branch: Agar aap koi naya feature test karna chahte hain bina original project ko kharab kiye, toh aap ek alag branch bana kar kaam kar sakte hain."
+      },
+      {
+        image: "1000065010.jpg",
+        caption: "Aap screen par dekh sakte hain, yeh GitHub ka actual project dashboard ya Repository view hai. Yahan aapko file structure, recent commits, README description, aur project ki branches ek hi jaga nazar aati hain. Everything is super neat and clean!"
+      },
+      {
+        image: "1000065011.jpg",
+        caption: "Branching actually collaboration ko safe aur smooth banati hai. Main branch mein hamesha stable aur final code rehta hai. Jab team members kaam karte hain, toh woh apni alag feature branch banate hain. Is se original code disturb nahi hota... aur team ke beech conflicts bhi nahi aate!"
+      },
+      {
+        image: "1000065012.jpg",
+        caption: "Jab aapka kaam feature branch par complete ho jaye, toh aap Pull Request — yaani PR open karte hain. Yahan aap apni team ko bolte hain... 'Mera code check kar lo!' Team members code ko review karte hain, feedback dete hain, aur approval ke baad code main branch mein merge ho jata hai. This keeps our code quality high!"
+      },
+      {
+        image: "1000065013.jpg",
+        caption: "Aur sabse awesome feature... GitHub Pages! Aap apni static website ki files repository mein upload karke GitHub Pages se direct hosting kar sakte hain. Sirf kuch clicks mein aapki website puri duniya ke liye live ho jati hai! Absolutely free!"
+      },
+      {
+        image: "1000065014.jpg",
+        caption: "To recap... Aaj humne seekha Repositories, Commits, Branches, aur Pull Requests ke baare mein! Ab aapka next step yeh hai ke GitHub par apna account banayein, pehli repo banayein, aur branching ke saath experiment karein. Practice makes perfect, so don't hesitate to ask for help!"
+      },
+      {
+        image: "1000065015.jpg",
+        caption: "Thank you so much everyone for listening! Keep building, keep collaborating, and happy coding! Agar aapka koi bhi question hai, toh feel free to ask now!"
+      }
+    ];
+
+    let currentIndex = 0;
+    const slideImg = document.getElementById('slide-img');
+    const slideCaption = document.getElementById('slide-caption');
+    const currentSlideNum = document.getElementById('current-slide-num');
+    const totalSlidesNum = document.getElementById('total-slides-num');
+    const audio = document.getElementById('audio-player');
+    const playIcon = document.getElementById('play-icon');
+    const audioStatus = document.getElementById('audio-status');
+
+    totalSlidesNum.textContent = slides.length;
+
+    function updateSlide() {
+      slideImg.src = slides[currentIndex].image;
+      slideCaption.textContent = `"${slides[currentIndex].caption}"`;
+      currentSlideNum.textContent = currentIndex + 1;
+    }
+
+    function nextSlide() {
+      if (currentIndex < slides.length - 1) {
+        currentIndex++;
+        updateSlide();
+      }
+    }
+
+    function prevSlide() {
+      if (currentIndex > 0) {
+        currentIndex--;
+        updateSlide();
+      }
+    }
+
+    function toggleAudio() {
+      if (audio.paused) {
+        audio.play().then(() => {
+          playIcon.className = "fas fa-pause";
+          audioStatus.textContent = "Playing Voiceover...";
+        }).catch(err => {
+          alert("Audio file 'audio.mp3' not found in the directory. Please place your audio file in the same folder.");
+        });
+      } else {
+        audio.pause();
+        playIcon.className = "fas fa-play";
+        audioStatus.textContent = "Paused";
+      }
+    }
+
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === ' ') {
+        nextSlide();
+      } else if (e.key === 'ArrowLeft') {
+        prevSlide();
+      }
+    });
+
+    // Initialize first slide
+    updateSlide();
+  </script>
+</body>
+</html>
+```
